@@ -6,14 +6,14 @@ const AllUsers = () => {
     const {data: users = [], refetch} = useQuery({
         queryKey: ['users'],
         queryFn: async()=>{
-            const res = await fetch('http://localhost:5000/users');
+            const res = await fetch('https://doctor-server-portal.vercel.app/users');
             const data = await res.json();
             return data;
         }
     });
 
     const handleMakeAdmin = (_id) =>{
-        fetch(`http://localhost:5000/users/admin/${_id}`, {
+        fetch(`https://doctor-server-portal.vercel.app/users/admin/${_id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessTocken')}`
@@ -33,7 +33,7 @@ const AllUsers = () => {
             <h3 className='text-3xl mb-5'>All Users</h3>
 
             <div className="overflow-x-auto">
-                <table className="table">
+                <table className="table sm:table-xs md:table-md lg:table-lg">
                     {/* head */}
                     <thead>
                         <tr>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
@@ -6,6 +6,11 @@ import { toast } from 'react-hot-toast';
 import useToken from '../../Hooks/useToken';
 
 const SignUp = () => {
+    //changing title start
+    useEffect(()=>{
+        document.title = 'Doctors-SignUp';
+    }, [])
+    //changing title end
     //createUser with Firebase Email and Password start
     const{createUser, updateUser} = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('');
@@ -45,7 +50,7 @@ const SignUp = () => {
     }
     const saveUser = (name, email) =>{
         const user = {name, email};
-        fetch('http://localhost:5000/users', {
+        fetch('https://doctor-server-portal.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -62,7 +67,7 @@ const SignUp = () => {
     }
 
     // const getUserToken = (email) =>{
-    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //     fetch(`https://doctor-server-portal.vercel.app/jwt?email=${email}`)
     //     .then(res=> res.json())
     //     .then(data =>{
     //         if(data.accessTocken){

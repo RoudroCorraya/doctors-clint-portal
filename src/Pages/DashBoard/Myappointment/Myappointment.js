@@ -2,32 +2,43 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
+import Loading from '../../Home/Home/Shared/Loading/Loading';
 
 const Myappointment = () => {
     const { user } = useContext(AuthContext);
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
+    const url = `https://doctor-server-portal.vercel.app/bookings?email=${user?.email}`;
     //exploring tanquery system for loading data start
 
-    const { data: bookings = [] } = useQuery({
+    const { data: bookings = [] , refetch, isLoading} = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: async () => {
+            if(!user){
+                return [];
+            }
             const res = await fetch(url, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessTocken')}`
                 }
             });
+           
+            refetch();
             const data = await res.json();
             console.log('booking', data);
+            
             return data;
         }
-    })
+    });
+   console.log(bookings);
 
+   if(isLoading){
+    return <Loading></Loading>
+}
     //exploring tanquery system for loading data start
     return (
-        <div>
+        <div className='overflow-x-hidden'>
             <h2 className='text-3xl mb-5'>My Appointments</h2>
             <div className="overflow-x-auto">
-                <table className="table">
+                <table className="table sm:table-xs md:table-md lg:table-lg">
                     {/* head */}
                     <thead>
                         <tr>
@@ -42,7 +53,7 @@ const Myappointment = () => {
                     <tbody>
                         {/* row 1 */}
                         {
-                            bookings.map((booking, i) => <tr key={booking._id}>
+                            bookings?.map((booking, i) => <tr key={booking._id}>
                                 <th>{i + 1}</th>
                                 <td>{booking.patient}</td>
                                 <td>{booking.treatment}</td>
@@ -61,13 +72,7 @@ const Myappointment = () => {
                                 </td>
                             </tr>)
                         }
-                        {/* <tr>
-                            <th>1</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                            <td>Blue</td>
-                        </tr> */}
+                        
                     </tbody>
                 </table>
             </div>

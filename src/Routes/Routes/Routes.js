@@ -33,7 +33,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/appointment',
-                element: <AppointDetails></AppointDetails>
+                element: <PrivateRoute><AppointDetails></AppointDetails></PrivateRoute>
             },
             {
                 path: '/signup',
@@ -68,8 +68,8 @@ const router = createBrowserRouter([
         },
         {
             path: '/dashboard/payment/:_id',
-            element: <AdminRoute><Payment></Payment></AdminRoute>,
-            loader: ({params}) => fetch(`http://localhost:5000/bookings/${params._id}`)
+            element: <Payment></Payment>,
+            loader: ({params}) => fetch(`https://doctor-server-portal.vercel.app/bookings/${params._id}`)
             
 
         }

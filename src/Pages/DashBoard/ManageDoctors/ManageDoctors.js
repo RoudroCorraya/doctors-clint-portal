@@ -14,7 +14,7 @@ const ManageDoctors = () => {
         queryKey: ['doctors'],
         queryFn: async () => {
             try {
-                const res = await fetch('http://localhost:5000/doctors', {
+                const res = await fetch('https://doctor-server-portal.vercel.app/doctors', {
                     headers: {
                         authorization: `bearer ${localStorage.getItem('accessTocken')}`
                     }
@@ -29,7 +29,7 @@ const ManageDoctors = () => {
     });
     const DeleteSucessModal = (doctor) =>{
         console.log('deleted',doctor);
-        fetch(`http://localhost:5000/doctors/${doctor._id}`, {
+        fetch(`https://doctor-server-portal.vercel.app/doctors/${doctor._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessTocken')}`
@@ -53,7 +53,7 @@ const ManageDoctors = () => {
             
             <h3 className='text-3xl mb-5'>Manage Doctors</h3>
             <div className="overflow-x-auto">
-                <table className="table">
+                <table className="table sm:table-xs md:table-md lg:table-lg">
                     {/* head */}
                     <thead>
                         <tr>
@@ -71,7 +71,7 @@ const ManageDoctors = () => {
                                 <th>{i + 1}</th>
                                 <td>
                                     <div className="avatar">
-                                        <div className="w-24 rounded-full">
+                                        <div className="lg:w-24 sm:w-12 md:w-16 rounded-full">
                                             <img src={doctor.image} alt='doctor.jpj' />
                                         </div>
                                     </div>

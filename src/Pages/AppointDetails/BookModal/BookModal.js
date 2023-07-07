@@ -2,12 +2,13 @@ import { format } from 'date-fns';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const BookModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
     const { name: treatmentName, slots, price } = treatment;
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const date = format(selectedDate, 'PP');
-    const handleBooking = (event) =>{
+    const handleBooking = (event) => {
         event.preventDefault();
         const form = event.target;
         const name = form.name.value;
@@ -18,35 +19,35 @@ const BookModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
         const booking = {
             appointmentDate: date,
             treatment: treatmentName,
-            patient : name,
+            patient: name,
             slot,
             email,
             phone,
             price
 
         }
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://doctor-server-portal.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(booking)
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log('posting data from modal',data);
-            if(data.acknowledged){
-                setTreatment(null);
-                toast.success('Booking Confirmed');
-                refetch();
-            }
-            else{
-                toast.error(data.message);
-            }
-            
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('posting data from modal', data);
+                if (data.acknowledged) {
+                    setTreatment(null);
+                    toast.success('Booking Confirmed');
+                    refetch();
+                }
+                else {
+                    toast.error(data.message);
+                }
+
+            })
         console.log('forn data cheak', booking);
-        
+
     }
 
     return (
@@ -65,16 +66,18 @@ const BookModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
 
                             <input className='w-full rounded-lg h-11 my-2' disabled type='text' value={date} name='rate'></input>
                             <select name='slot' className="select select-bordered w-full">
-                                
-                               {
-                                
-                                slots.map((slot, i) =><option value={slot} key={i}>{slot}</option>)
-                               }
+
+                                {
+
+                                    slots.map((slot, i) => <option value={slot} key={i}>{slot}</option>)
+                                }
                             </select>
                             <input className='w-full input-bordered rounded-lg h-11 my-2' type='text' defaultValue={user?.displayName} disabled placeholder='type here' name='name'></input>
                             <input className='w-full input-bordered rounded-lg h-11 my-2' type='text' defaultValue={user?.email} disabled placeholder='type here' name='email'></input>
                             <input className='w-full input-bordered rounded-lg h-11 my-2' type='text' placeholder='Phone' name='phone'></input>
-                            <button className='btn btn-accent w-full   rounded-lg my-4' type='submit'>Submit</button>
+                            
+                            <button className='btn btn-accent w-full   rounded-lg my-4' type='submit'>Submit</button> 
+                            
                         </form>
                     </div>
                 </div>

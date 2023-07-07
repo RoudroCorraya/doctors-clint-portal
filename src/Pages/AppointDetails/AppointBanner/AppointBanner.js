@@ -8,8 +8,10 @@ const AppointBanner = ({selectedDate, setSelectedDate}) => {
     return (
         <header>
             <div className="hero">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    <img src={apponmtChair} className="max-w-sm rounded-lg shadow-2xl" alt='chair.png' />
+                <div className="hero-content flex-col lg:flex-row-reverse ">
+                <div className='max-w-xs lg:w-1/2 mx-6'>
+                <img src={apponmtChair} className="w-full rounded-lg shadow-2xl" alt='foinne.png'/>
+                </div>
                     <div>
                        <DayPicker
                        mode='single'

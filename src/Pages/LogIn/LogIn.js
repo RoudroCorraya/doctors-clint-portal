@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
@@ -6,6 +6,11 @@ import useToken from '../../Hooks/useToken';
 import { toast } from 'react-hot-toast';
 
 const LogIn = () => {
+    //changing title start
+    useEffect(()=>{
+        document.title = 'Doctors-LogIn';
+    }, [])
+    //changing title end
     const { signIn } = useContext(AuthContext);
     const [logInerror, setLogInerror] = useState('');
     const [loginUserEmail, setloginUserEmail] = useState('');

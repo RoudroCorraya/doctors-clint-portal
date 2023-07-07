@@ -14,7 +14,7 @@ const AvailableAppointment = ({selectedDate}) => {
 const {data : appOptions = [], refetch, isLoading} = useQuery({
     queryKey: ['appOptions', date],
     queryFn: async() => {
-        const res = await fetch(`http://localhost:5000/appointoptions?date=${date}`);
+        const res = await fetch(`https://doctor-server-portal.vercel.app/appointoptions?date=${date}`);
         const data = await res.json();
         return data;
         
@@ -26,7 +26,7 @@ if(isLoading){
 //exploring react query start
     
     // useEffect(()=>{
-    //     fetch('http://localhost:5000/appointoptions')
+    //     fetch('https://doctor-server-portal.vercel.app/appointoptions')
     //     .then(res => res.json())
     //     .then(data => setAppOptions(data))
     // },[])
